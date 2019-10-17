@@ -1,49 +1,51 @@
 from skimage.io import imread
 from sift import SIFT
+import matplotlib.pyplot as plt
 
 import pickle
 from os.path import isfile
 
-if __name__ == '__main__':
-    num_img = 3
+num_img = 3
+img_num_offset = 3
+kp_pyrs = []
+ims = []
 
-    kp_pyrs = []
-    ims = []
+for j in range(1, num_img + 1):
 
-    for i in range(4, num_img + 1):
-        im = imread('images/IMG_115%d.JPG' % i)
-        ims.append(im)
+    im = imread('images/IMG_115' + str(j + img_num_offset) + '.jpg')
 
-        if isfile('results/kp_pyr%d.pkl' % i):
-            kp_pyrs.append(pickle.load(open('results/kp_pyr%d.pkl' % i, 'rb')))
-            continue
+    ims.append(im)
 
-        print('Performing SIFT on image %d' % i)
+    if isfile('results/kp_pyr%s.pkl' % str(j + img_num_offset)):
+        kp_pyrs.append(pickle.load(open('results/kp_pyr%s.pkl' % str(j + img_num_offset), 'rb')))
+        continue
 
-        sift_detector = SIFT(im)
-        _ = sift_detector.get_features()
-        kp_pyrs.append(sift_detector.kp_pyr)
+    print('Performing SIFT on image %s' % str(j + img_num_offset))
 
-        pickle.dump(sift_detector.kp_pyr, open('results/kp_pyr%d.pkl' % i, 'wb'))
-        pickle.dump(sift_detector.feats, open('results/feat_pyr%d.pkl' % i, 'wb'))
+    sift_detector = SIFT(im)
+    _ = sift_detector.get_features()
+    kp_pyrs.append(sift_detector.kp_pyr)
 
-    import matplotlib.pyplot as plt
+    pickle.dump(sift_detector.kp_pyr, open('results/kp_pyr%s.pkl' % str(j + img_num_offset), 'wb'))
+    pickle.dump(sift_detector.feats, open('results/feat_pyr%s.pkl' % str(j + img_num_offset), 'wb'))
 
-    for i in range(len(kp_pyrs[0])):
-        _, ax = plt.subplots(1, 3)
-        ax[0].imshow(ims[0])
+'''
+for i in range(len(kp_pyrs[0])):
+    _, ax = plt.subplots(1, 3)
+    ax[0].imshow(ims[0])
 
-        kps = kp_pyrs[0][i] * (2 ** i)
-        ax[0].scatter(kps[:, 0], kps[:, 1], c='b', s=2.5)
+    kps = kp_pyrs[0][i] * (2 ** i)
+    ax[0].scatter(kps[:, 0], kps[:, 1], c='b', s=2.5)
 
-        ax[1].imshow(ims[1])
+    ax[1].imshow(ims[1])
 
-        kps = kp_pyrs[1][i] * (2 ** i)
-        ax[1].scatter(kps[:, 0], kps[:, 1], c='b', s=2.5)
+    kps = kp_pyrs[1][i] * (2 ** i)
+    ax[1].scatter(kps[:, 0], kps[:, 1], c='b', s=2.5)
 
-        ax[2].imshow(ims[2])
+    ax[2].imshow(ims[2])
 
-        kps = kp_pyrs[2][i] * (2 ** i)
-        ax[2].scatter(kps[:, 0], kps[:, 1], c='b', s=2.5)
+    kps = kp_pyrs[2][i] * (2 ** i)
+    ax[2].scatter(kps[:, 0], kps[:, 1], c='b', s=2.5)
 
-        plt.show()
+    plt.show()
+'''
