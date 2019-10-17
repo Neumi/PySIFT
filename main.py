@@ -11,8 +11,8 @@ kp_pyrs = []
 ims = []
 
 for j in range(1, num_img + 1):
-
-    im = imread('images/IMG_115' + str(j + img_num_offset) + '.jpg')
+    imageName = 'IMG_115' + str(j + img_num_offset) + '.jpg'
+    im = imread('images/' + imageName)
 
     ims.append(im)
 
@@ -20,7 +20,7 @@ for j in range(1, num_img + 1):
         kp_pyrs.append(pickle.load(open('results/kp_pyr%s.pkl' % str(j + img_num_offset), 'rb')))
         continue
 
-    print('Performing SIFT on image %s' % str(j + img_num_offset))
+    print('Performing SIFT on image %s' % imageName)
 
     sift_detector = SIFT(im)
     _ = sift_detector.get_features()
