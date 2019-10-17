@@ -29,7 +29,6 @@ for j in range(1, num_img + 1):
     pickle.dump(sift_detector.kp_pyr, open('results/kp_pyr%s.pkl' % str(j + img_num_offset), 'wb'))
     pickle.dump(sift_detector.feats, open('results/feat_pyr%s.pkl' % str(j + img_num_offset), 'wb'))
 
-'''
 for i in range(len(kp_pyrs[0])):
     _, ax = plt.subplots(1, 3)
     ax[0].imshow(ims[0])
@@ -48,4 +47,3 @@ for i in range(len(kp_pyrs[0])):
     ax[2].scatter(kps[:, 0], kps[:, 1], c='b', s=2.5)
 
     plt.show()
-'''
