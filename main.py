@@ -6,13 +6,13 @@ import pickle
 from os.path import isfile
 
 num_img = 3
-img_num_offset = 3
+img_num_offset = 1
 kp_pyrs = []
 ims = []
 
 for j in range(1, num_img + 1):
-    imageName = 'IMG_115' + str(j + img_num_offset) + '.jpg'
-    im = imread('images/' + imageName)
+    imageName = 'IMG_152' + str(j + img_num_offset) + '.jpg'
+    im = imread('images/room/' + imageName)
 
     ims.append(im)
 
